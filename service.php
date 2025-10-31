@@ -19,11 +19,15 @@ class CadastroService{
    $nomeArquivo= uniqid() ."_". basename($filesArray['name'][$index]);
    $destino = $uploadDir .$nomeArquivo;
 
-   if(move_uploaded_file($filesArray['tmp_name'][$index],$destino)){return "/uploads/"$nomeArquivo;}//salva a foto
-} else{
+   if(move_uploaded_file($filesArray['tmp'][$index],$destino)){return "/uploads/".$nomeArquivo;}else{ return null;}//salva a foto
 
-    return null;
-}
+
+
+
+
+  }
+
+
 
   }
 
@@ -33,7 +37,6 @@ class CadastroService{
 
 
 
-}
 
 
 
