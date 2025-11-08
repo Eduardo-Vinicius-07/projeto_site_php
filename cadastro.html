@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Página de Cadastro</title>
 <link rel="stylesheet" href="./css/estilo.css">
+
 </head>
 <body>
 
-<form method="post" action="cadastrar.php" enctype="multipart/form-data">
+  <form method="post" action="cadastrar.php" enctype="multipart/form-data">
     <div class="container">          
         <div class="cadastro-form">
             <fieldset class="fieldset">      
@@ -76,51 +77,33 @@
     </div>
 </form>
 
+       
+ </div>
+
+
+</body>
+
 <script>
     let contadorPets = 1;
 
     function adicionarPet() {
-        const container = document.getElementById('pets-container');
-        const novosPetsContainer = document.getElementById('novos-pets');
-        
-        // Clona o primeiro bloco de pet
-        const primeiroBloco = container.querySelector('.pet-block');
-        const novoBloco = primeiroBloco.cloneNode(true);
-        
-        // Atualiza todos os names para o novo índice
-        const inputs = novoBloco.querySelectorAll('input, select');
-        inputs.forEach(input => {
-            if (input.name) {
-                // Atualiza pets[0][campo] para pets[1][campo], pets[2][campo], etc.
-                if (input.name.startsWith('pets[')) {
-                    input.name = input.name.replace(/pets\[\d+\]/, `pets[${contadorPets}]`);
-                }
-                
-                // Atualiza pet_fotos[0] para pet_fotos[1], etc.
-                if (input.name.startsWith('pet_fotos[')) {
-                    input.name = `pet_fotos[${contadorPets}]`;
-                }
-            }
-            
-            // Limpa os valores
-            if (input.type === 'text') {
-                input.value = '';
-            } else if (input.type === 'select-one') {
-                input.selectedIndex = 0;
-            } else if (input.type === 'radio') {
-                input.checked = false;
-            } else if (input.type === 'file') {
-                input.value = '';
-            }
-        });
-        
-        // Adiciona o novo bloco
-        novosPetsContainer.appendChild(novoBloco);
-        contadorPets++;
-        
-        console.log(`Pet ${contadorPets} adicionado com sucesso`);
-    }
-</script>
+      const container = document.getElementById('pets-container');
+     const pets = document.getElementById('pets');
 
-</body>
+      const blocos = container.getElementsByClassName('pet-block');
+      const ultimoBloco = blocos[blocos.length - 1];
+
+      const novoBloco = ultimoBloco.cloneNode(true);
+      novoBloco.querySelectorAll('input, select').forEach(el => {
+        if (el.type !== 'radio' && el.type !== 'file') el.value = '';
+        if (el.type === 'radio') {
+          el.name = el.name.replace(/_\d+$/, `_${contadorPets}`);
+          el.checked = false;
+        }
+      });
+
+      pets.appendChild(novoBloco);
+      contadorPets++;
+    }
+  </script>
 </html>
